@@ -1,11 +1,15 @@
-# Usa la imagen oficial de Maven con JDK 17
 FROM ghcr.io/jeffersonriobueno/selenium-cicd/selenium-test:base
 
 # Define el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
 # Copiar el código del proyecto
-COPY ../. /app
+COPY . /app
+
+# Configurar variables de entorno
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH=/opt/java/openjdk/bin:$PATH
+ENV DISPLAY=:99
 
 # Ejecutar Maven para compilar y ejecutar pruebas
 CMD ["mvn", "test"]

@@ -59,6 +59,7 @@ ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="$JAVA_HOME/bin:$PATH"
 ENV CHROME_BIN=/usr/bin/google-chrome-stable
 ENV CHROMEDRIVER_PATH=/usr/local/bin/chromedriver
+ENV DISPLAY=:99
 
 # Verificar las versiones instaladas
 RUN echo "Java Version:" && java -version \

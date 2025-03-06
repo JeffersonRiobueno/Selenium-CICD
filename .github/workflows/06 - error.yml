@@ -16,10 +16,10 @@ jobs:
           echo "Este jobs genero un error"
           exit 1
 
- 
+
   build:
     runs-on: ubuntu-24.04
-    needs: error
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

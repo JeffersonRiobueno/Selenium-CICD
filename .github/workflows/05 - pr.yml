@@ -1,0 +1,25 @@
+name: Workflow para PR
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  run-for-pr:
+#    if: ${{ github.event_name == 'pull_request' }} # Solo se ejecuta para PRs
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Imprimir info de PR
+        run: |
+          echo "Este job se ehecuta de forma automatica para un Pull Request"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Branch: ${{ github.head_ref }}"
+          echo "Base Branch: ${{ github.base_ref }}"
+

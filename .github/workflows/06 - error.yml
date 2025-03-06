@@ -1,0 +1,37 @@
+name: Branches - Error
+
+on:
+  push:
+    branches: 
+      - error
+
+jobs:
+
+  error:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Imprimir mensaje de error
+        run: |
+          echo "Este jobs genero un error"
+          exit 1
+
+
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Imprimir info de la Rama
+        run: |
+          echo "Este workflow corre en una rama diferente a Main."
+          echo "Branch: ${{ github.ref_name }}"
+      - name: Run test
+        run: echo "Run Test"
+        
+
+
+
+

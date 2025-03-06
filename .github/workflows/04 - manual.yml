@@ -1,0 +1,18 @@
+name: Manual
+
+on:
+  workflow_dispatch: # Permite la ejecución manual
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Definir nombre
+        run: echo "USERNAME=JEFF" >> $GITHUB_ENV
+      
+      - name: Run test
+        run: python example/app.py

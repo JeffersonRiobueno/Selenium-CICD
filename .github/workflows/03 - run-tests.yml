@@ -12,7 +12,7 @@ env:
   IMAGE_NAME: selenium-test:run
 
 jobs:
-  test:
+  run-test:
     runs-on: ubuntu-24.04 
 
     steps:

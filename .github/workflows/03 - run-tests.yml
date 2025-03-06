@@ -3,10 +3,8 @@ name: Run Selenium Tests
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - test
+
 
 env:
   IMAGE_NAME: selenium-test:run

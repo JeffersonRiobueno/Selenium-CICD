@@ -1,9 +1,10 @@
-name: WorkFlow - ALL
+name: Build imagen - Docker
 
 on:
   push:
     branches:
-      - 'main'
+      - 'build'
+      - 'test'
       
 env:
   IMAGE_NAME: selenium-test
@@ -29,27 +30,3 @@ jobs:
         echo IMAGE_ID=$IMAGE_ID
         docker tag $IMAGE_NAME $IMAGE_ID:base
         docker push $IMAGE_ID:base
-
-jobs:
-  run-test:
-    runs-on: ubuntu-24.04 
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Log in to registry
-        run: echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Build image for test
-        run: docker build  --tag $IMAGE_NAME -f build/dockerfile-test .
-
-      - name: Run tests with Maven
-        run: ./run-tests.sh
-
-
-      - name: Upload Cucumber Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-report
-          path: reports/cucumber-report.html

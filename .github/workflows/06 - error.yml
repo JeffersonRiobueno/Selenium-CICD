@@ -18,7 +18,7 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
-
+    needs: error
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

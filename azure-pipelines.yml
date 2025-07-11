@@ -13,11 +13,22 @@ steps:
 - checkout: self
 
 - script: |
-    echo "Construyendo imagen Docker..."
+    echo "Building Docker Image..."
     docker build -t $(imageName) .
   displayName: 'Build Docker Image'
 
 - script: |
-    echo "Ejecutando contenedor..."
-    docker run --rm $(imageName)
-  displayName: 'Run Tests in Docker'
+    echo "Preparing local reports folder..."
+    mkdir -p $(Build.SourcesDirectory)/report
+  displayName: 'Create Reports Directory'
+
+- script: |
+    echo "Running Tests in Docker with volume..."
+    docker run --rm \
+      -v $(Build.SourcesDirectory)/report:/app/report \
+      $(imageName)
+  displayName: 'Run Tests and Export Reports'
+
+- publish: $(Build.SourcesDirectory)/report
+  artifact: selenium-reports
+  displayName: 'Publish Selenium Reports Artifact'

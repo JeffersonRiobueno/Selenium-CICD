@@ -6,22 +6,18 @@ trigger:
 pool:
   name: 'runner-local'
 
+variables:
+  imageName: 'selenium-tests:$(Build.BuildId)'
+
 steps:
-- task: Maven@3
-  inputs:
-    pomFile: 'pom.xml'
-    goals: 'clean test'
-    options: '-B'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-  displayName: 'Build and Test with Maven'
+- checkout: self
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-  condition: succeededOrFailed()
-  displayName: 'Publish Test Results'
+- script: |
+    echo "Construyendo imagen Docker..."
+    docker build -t $(imageName) .
+  displayName: 'Build Docker Image'
 
-- publish: $(System.DefaultWorkingDirectory)/target/surefire-reports
-  artifact: selenium-reports
+- script: |
+    echo "Ejecutando contenedor..."
+    docker run --rm $(imageName)
+  displayName: 'Run Tests in Docker'

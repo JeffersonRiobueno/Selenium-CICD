@@ -4,7 +4,7 @@ trigger:
       - main
 
 pool:
-  vmImage: 'runner-local'
+  name: 'runner-local'
 
 steps:
 - task: Maven@3
